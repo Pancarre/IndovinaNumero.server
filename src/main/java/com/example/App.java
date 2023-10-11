@@ -18,24 +18,51 @@ public class App
         Socket s;
         BufferedReader in;
         DataOutputStream out; 
+        int v ;
+        int receive = 4;
         try{
+            v = (int)(Math.random()*100)+1;
 
-            System.out.println("server in esecuzione");
+            
             Server = new ServerSocket(3000);
+            System.out.println("server in esecuzione");
+            System.out.println("numero casuale " + v);
             s = Server.accept();
             
             in = new BufferedReader (new InputStreamReader (s.getInputStream()));
             out  = new DataOutputStream(s.getOutputStream());
 
-            String receive = in.readLine();
-            String send = receive.toUpperCase();
-            out.writeBytes( send + "\n");
+
+
+            while(receive != 0){
+
+                receive = in.read();
+                System.out.println("numero casuale " + receive);
+
+            
+                if(receive > v){
+
+                    out.writeInt(2);
+
+                }
+                else if(receive < v){
+
+                    out.writeInt(1);
+
+                }
+                else{
+
+                    out.writeInt(0);
+
+                }
+
+            }
+            
 
             s.close();
         }
         catch(Exception e){
 
-            System.out.println(e.getMessage());
             System.out.println(e.getMessage());
             System.exit(1);
 
