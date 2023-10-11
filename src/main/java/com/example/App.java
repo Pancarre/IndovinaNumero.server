@@ -14,21 +14,24 @@ public class App
 {
     public static void main( String[] args )
     {
-    
+        ServerSocket Server;
+        Socket s;
+        BufferedReader in;
+        DataOutputStream out; 
         try{
 
             System.out.println("server in esecuzione");
-            ServerSocket Server = new ServerSocket(3344);
-            Socket s = Server.accept();
+            Server = new ServerSocket(3000);
+            s = Server.accept();
             
-            BufferedReader in = new BufferedReader (new InputStreamReader (s.getInputStream()));
-            DataOutputStream out  = new DataOutputStream(s.getOutputStream());
+            in = new BufferedReader (new InputStreamReader (s.getInputStream()));
+            out  = new DataOutputStream(s.getOutputStream());
 
             String receive = in.readLine();
             String send = receive.toUpperCase();
             out.writeBytes( send + "\n");
 
-
+            s.close();
         }
         catch(Exception e){
 
