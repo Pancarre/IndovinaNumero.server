@@ -22,42 +22,31 @@ public class App
         int receive = 4;
         try{
             v = (int)(Math.random()*100)+1;
-
-            
             Server = new ServerSocket(3000);
             System.out.println("server in esecuzione");
             System.out.println("numero casuale " + v);
             s = Server.accept();
-            
+
             in = new BufferedReader (new InputStreamReader (s.getInputStream()));
             out  = new DataOutputStream(s.getOutputStream());
 
-
-
-            while(receive != 0){
-
-                receive = in.read();
-                System.out.println("numero casuale " + receive);
-
+            do{
             
+                String str = in.readLine();
+                receive = Integer.parseInt(str);
+                System.out.println("numero ricevuto " + receive);
+
                 if(receive > v){
-
-                    out.writeInt(2);
-
+                    out.writeBytes("2\n");
                 }
                 else if(receive < v){
-
-                    out.writeInt(1);
-
+                    out.writeBytes("1\n");
                 }
                 else{
-
-                    out.writeInt(0);
-
+                    out.writeBytes("0\n");
                 }
 
-            }
-            
+            }while(receive != v);        
 
             s.close();
         }
